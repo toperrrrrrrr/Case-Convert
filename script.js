@@ -4,13 +4,6 @@ const lowerBtn = document.getElementById('lower-btn');
 const upperBtn = document.getElementById('upper-btn');
 const capitalBtn = document.getElementById('capital-btn');
 
-const refreshBtn = document.getElementById('refresh-btn');
-
-
-// Clear input text
-function clearInputText() {
-  input.value = '';
-}
 // Convert input text to sentence case
 function toSentenceCase(text) {
   return text.toLowerCase().replace(/(^|\.)\s*([a-z])/g, function(match, p1, p2) {
@@ -76,6 +69,37 @@ capitalBtn.addEventListener('click', function() {
   copyToClipboard(convertedText);
 });
 
-refreshBtn.addEventListener('click', function() {
-  clearInputText();
+
+
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCcYW61KHkiEwi4HdFO9oJWZ0lTGJUseqI",
+  authDomain: "webtest-c7cb6.firebaseapp.com",
+  projectId: "webtest-c7cb6",
+  storageBucket: "webtest-c7cb6.appspot.com",
+  messagingSenderId: "107131393871",
+  appId: "1:107131393871:web:142b6418e34b2a0cc2173a",
+  measurementId: "G-85JHER391N"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+
+// Get a reference to the database service
+var database = firebase.database();
+
+
+// Get a reference to the visit count
+var visitCountRef = database.ref('visitCount');
+
+// Increment the visit count by 1
+visitCountRef.transaction(function(currentCount) {
+	return (currentCount || 0) + 1;
+});
+
+// Update the page with the current visit count
+visitCountRef.on('value', function(snapshot) {
+	var visitCount = snapshot.val();
+	var countElement = document.getElementById('count');
+	countElement.innerHTML = visitCount;
 });
