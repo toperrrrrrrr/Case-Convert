@@ -4,6 +4,13 @@ const lowerBtn = document.getElementById('lower-btn');
 const upperBtn = document.getElementById('upper-btn');
 const capitalBtn = document.getElementById('capital-btn');
 
+const refreshBtn = document.getElementById('refresh-btn');
+
+
+// Clear input text
+function clearInputText() {
+  input.value = '';
+}
 // Convert input text to sentence case
 function toSentenceCase(text) {
   return text.toLowerCase().replace(/(^|\.)\s*([a-z])/g, function(match, p1, p2) {
@@ -67,4 +74,8 @@ capitalBtn.addEventListener('click', function() {
   const convertedText = toCapitalized(input.value);
   input.value = convertedText;
   copyToClipboard(convertedText);
+});
+
+refreshBtn.addEventListener('click', function() {
+  clearInputText();
 });
