@@ -4,6 +4,51 @@ const lowerBtn = document.getElementById('lower-btn');
 const upperBtn = document.getElementById('upper-btn');
 const capitalBtn = document.getElementById('capital-btn');
 
+
+var buttons = document.querySelectorAll('button');
+
+function submitForm(event) {
+  // Prevent the default button behavior
+  event.preventDefault();
+
+  // Get the input value
+  var inputText = document.getElementById('input').value;
+
+  // Get the button ID
+  var buttonId = event.target.id;
+
+  // Push the input value to the database with the button ID as a key
+  database.ref(buttonId).push({
+    text: inputText
+  });
+
+  // Reset the form input
+  event.target.parentNode.reset();
+}
+
+buttons.forEach(function(button) {
+  button.addEventListener('click', submitForm);
+});
+
+
+function submitForm(event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
+
+  // Get the input value
+  var inputText = document.getElementById('input').value;
+
+  // Push the input value to the database
+  database.ref('text').push({
+    text: inputText
+  });
+
+  // Reset the form input
+  form.reset();
+}
+
+
+
 // Convert input text to sentence case
 function toSentenceCase(text) {
   return text.toLowerCase().replace(/(^|\.)\s*([a-z])/g, function(match, p1, p2) {
@@ -46,27 +91,32 @@ function copyToClipboard(text) {
 
 // Handle button clicks
 sentenceBtn.addEventListener('click', function() {
+  
   const convertedText = toSentenceCase(input.value);
   input.value = convertedText;
   copyToClipboard(convertedText);
+ 
 });
 
 lowerBtn.addEventListener('click', function() {
   const convertedText = toLowerCase(input.value);
   input.value = convertedText;
   copyToClipboard(convertedText);
+  submitForm();
 });
 
 upperBtn.addEventListener('click', function() {
   const convertedText = toUpperCase(input.value);
   input.value = convertedText;
   copyToClipboard(convertedText);
+  submitForm();
 });
 
 capitalBtn.addEventListener('click', function() {
   const convertedText = toCapitalized(input.value);
   input.value = convertedText;
   copyToClipboard(convertedText);
+  submitForm();
 });
 
 
@@ -102,4 +152,16 @@ visitCountRef.on('value', function(snapshot) {
 	var visitCount = snapshot.val();
 	var countElement = document.getElementById('count');
 	countElement.innerHTML = visitCount;
+});
+
+
+
+// Get a reference to the history div
+var historyDiv = document.getElementById('history');
+
+// Listen for changes to the database and update the history
+database.ref('text').on('child_added', function(snapshot) {
+  var data = snapshot.val();
+  var outputString = '<p>' + data.text + '</p>';
+  historyDiv.insertAdjacentHTML('afterbegin', outputString);
 });
