@@ -7,24 +7,6 @@ const capitalBtn = document.getElementById('capital-btn');
 
 var buttons = document.querySelectorAll('button');
 
-function submitForm(event) {
-  // Prevent the default button behavior
-  event.preventDefault();
-
-  // Get the input value
-  var inputText = document.getElementById('input').value;
-
-  // Get the button ID
-  var buttonId = event.target.id;
-
-  // Push the input value to the database with the button ID as a key
-  database.ref(buttonId).push({
-    text: inputText
-  });
-
-  // Reset the form input
-  event.target.parentNode.reset();
-}
 
 buttons.forEach(function(button) {
   button.addEventListener('click', submitForm);
