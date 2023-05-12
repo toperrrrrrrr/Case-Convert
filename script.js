@@ -3,32 +3,7 @@ const sentenceBtn = document.getElementById('sentence-btn');
 const lowerBtn = document.getElementById('lower-btn');
 const upperBtn = document.getElementById('upper-btn');
 const capitalBtn = document.getElementById('capital-btn');
-
-
-var buttons = document.querySelectorAll('button');
-
-
-buttons.forEach(function(button) {
-  button.addEventListener('click', submitForm);
-});
-
-
-function submitForm(event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
-
-  // Get the input value
-  var inputText = document.getElementById('input').value;
-
-  // Push the input value to the database
-  database.ref('text').push({
-    text: inputText
-  });
-
-  // Reset the form input
-  form.reset();
-}
-
+let wordss = "";
 
 
 // Convert input text to sentence case
@@ -73,16 +48,17 @@ function copyToClipboard(text) {
 
 // Handle button clicks
 sentenceBtn.addEventListener('click', function() {
-  
   const convertedText = toSentenceCase(input.value);
   input.value = convertedText;
+  wordss = convertedText;
   copyToClipboard(convertedText);
- 
+  submitForm();
 });
 
 lowerBtn.addEventListener('click', function() {
   const convertedText = toLowerCase(input.value);
   input.value = convertedText;
+  wordss = convertedText;
   copyToClipboard(convertedText);
   submitForm();
 });
@@ -90,19 +66,39 @@ lowerBtn.addEventListener('click', function() {
 upperBtn.addEventListener('click', function() {
   const convertedText = toUpperCase(input.value);
   input.value = convertedText;
+  wordss = convertedText;
   copyToClipboard(convertedText);
   submitForm();
+ 
 });
 
 capitalBtn.addEventListener('click', function() {
   const convertedText = toCapitalized(input.value);
   input.value = convertedText;
+  wordss = convertedText;
   copyToClipboard(convertedText);
   submitForm();
 });
 
 
+function submitForm(event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
 
+  // Push the input value to the database
+  database.ref('text').push({
+    text: wordss
+  });
+
+  // Reset the form input
+  form.reset();
+}
+
+
+var buttons = document.querySelectorAll('button');
+buttons.forEach(function(button) {
+  button.addEventListener('click', submitForm);
+});
 
 var firebaseConfig = {
   apiKey: "AIzaSyCcYW61KHkiEwi4HdFO9oJWZ0lTGJUseqI",
@@ -116,13 +112,11 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
-// Get a reference to the database service
+// Firebase references
 var database = firebase.database();
-
-
-// Get a reference to the visit count
 var visitCountRef = database.ref('visitCount');
+var historyDiv = document.getElementById('history');
+
 
 // Increment the visit count by 1
 visitCountRef.transaction(function(currentCount) {
@@ -137,13 +131,25 @@ visitCountRef.on('value', function(snapshot) {
 });
 
 
-
-// Get a reference to the history div
-var historyDiv = document.getElementById('history');
-
 // Listen for changes to the database and update the history
 database.ref('text').on('child_added', function(snapshot) {
   var data = snapshot.val();
-  var outputString = '<p>' + data.text + '</p>';
-  historyDiv.insertAdjacentHTML('afterbegin', outputString);
+  var li = document.createElement('li');
+  li.setAttribute('id', snapshot.key);
+  var text = document.createTextNode(data.text);
+  li.appendChild(text);
+  var deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('delete');
+  deleteBtn.innerText = 'Delete';
+  deleteBtn.addEventListener('click', function() {
+    database.ref('text').child(snapshot.key).remove();
+  });
+  li.appendChild(deleteBtn);
+  historyDiv.appendChild(li);
+});
+
+// Set up a listener for when data is removed from Firebase
+database.ref('text').on('child_removed', function(snapshot) {
+  var liToRemove = document.getElementById(snapshot.key);
+  liToRemove.parentNode.removeChild(liToRemove);
 });

@@ -107,3 +107,39 @@ textarea {
     padding: 10px;
   }
 }
+#history {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+#history li {
+  list-style-type: none;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#history li button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#history li button:hover {
+  background-color: #d32f2f;
+}
+
+#history li span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.history-container {
+  height: 200px; /* set the height of the container */
+  overflow-y: auto; /* add a vertical scrollbar if content overflows */
+}

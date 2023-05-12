@@ -13,7 +13,7 @@
       <h1>Case Converter</h1>
       <form>
         <label for="input">Enter text to convert:</label>
-        <textarea id="input" rows="4"></textarea>
+        <textarea id="input" rows="4">LOREM IPSUM</textarea>
         <div class="button-group">
           <button type="button" id="sentence-btn" class="btn">Sentence case</button>
           <button type="button" id="lower-btn" class="btn">lowercase</button>
@@ -21,8 +21,9 @@
           <button type="button" id="capital-btn" class="btn">Capitalized</button>
         </div>
       </form>
-      <div >
-        <h2>History</h2>
+      <h2>History</h2>
+      <div class="history-container" >
+       
         <ul id="history"></ul>
       </div>
     </div>
@@ -33,7 +34,7 @@
     </footer>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script src="fc.js"></script>
     <script src="script.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
