@@ -132,23 +132,58 @@ visitCountRef.on('value', function(snapshot) {
 
 
 // Listen for changes to the database and update the history
-database.ref('text').on('child_added', function(snapshot) {
+// database.ref('text').on('child_added', function(snapshot) {
+//   var data = snapshot.val();
+//   var li = document.createElement('li');
+//   li.setAttribute('id', snapshot.key);
+//   var text = document.createTextNode(data.text);
+//   li.appendChild(text);
+//   var deleteBtn = document.createElement('button');
+//   deleteBtn.classList.add('delete');
+//   deleteBtn.innerText = 'Delete';
+//   deleteBtn.addEventListener('click', function() {
+//     database.ref('text').child(snapshot.key).remove();
+//   });
+//   li.appendChild(deleteBtn);
+//   historyDiv.appendChild(li);
+// });
+
+// // Set up a listener for when data is removed from Firebase
+// database.ref('text').on('child_removed', function(snapshot) {
+//   var liToRemove = document.getElementById(snapshot.key);
+//   liToRemove.parentNode.removeChild(liToRemove);
+// });// Function to handle delete button click
+function handleDeleteButtonClick(key) {
+  database.ref('text').child(key).remove();
+}
+
+// Function to create an li element with delete button
+function createListItem(snapshot) {
   var data = snapshot.val();
   var li = document.createElement('li');
   li.setAttribute('id', snapshot.key);
-  var text = document.createTextNode(data.text);
-  li.appendChild(text);
+
   var deleteBtn = document.createElement('button');
   deleteBtn.classList.add('delete');
   deleteBtn.innerText = 'Delete';
   deleteBtn.addEventListener('click', function() {
-    database.ref('text').child(snapshot.key).remove();
+    handleDeleteButtonClick(snapshot.key);
   });
+
   li.appendChild(deleteBtn);
+
+  var text = document.createTextNode(data.text);
+  li.appendChild(text);
+
   historyDiv.appendChild(li);
+}
+
+// Listener for child added event
+database.ref('text').on('child_added', function(snapshot) {
+  createListItem(snapshot);
 });
 
-// Set up a listener for when data is removed from Firebase
+// Listener for child removed event
 database.ref('text').on('child_removed', function(snapshot) {
   var liToRemove = document.getElementById(snapshot.key);
   liToRemove.parentNode.removeChild(liToRemove);
