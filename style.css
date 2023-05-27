@@ -9,7 +9,6 @@
 
 .section #delete-all {
   position: relative;
-  
 }
 
 body{
@@ -73,21 +72,20 @@ textarea {
 }
 
 
-
-
 .btn {
   width: 23%;
   font-size: 15px;
   padding: 15px;
   border-radius: 5px;
   border: none;
-  color: #fff;
-  background-color: #333;
+  color: #333;
+  background-color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .btn:hover {
+  color: #fff;
   background-color: #555;
 }
 
@@ -98,7 +96,6 @@ textarea {
     margin-bottom: 10px;
   }
 }
-
 
 
 /*  */
@@ -199,14 +196,6 @@ h3{
   max-width: 100%;
   padding: 15px;
 }
-.section-col-2{
-  position: relative;
-  width: 100%;
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  max-width: 50%;
-  padding: 15px;
-}
 .section{
   position: relative;
   display: block;
@@ -259,8 +248,9 @@ h3{
   }
 
   .section-fluid-main{
-    padding-top: 100px;
-    padding-bottom: 140px;
+    position: absolute;
+  left: 50%;
+    
   }
 }
 @media (max-width: 575px) {
@@ -272,26 +262,6 @@ h3{
   }
   .section-col-1{
     padding: 5px;
-  }
-  .section-col-2{
-    padding: 5px;
-  }
-  .date-btn:checked + label,
-  .date-btn:not(:checked) + label{
-    padding: 5px;
-  }
-}
-@media (max-width: 450px) {
-  .section-col-2{
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .date-btn:checked + label,
-  .date-btn:not(:checked) + label{
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
   }
 }
 
@@ -304,23 +274,12 @@ h3{
 .color-yellow{
   transition: color 200ms 100ms ease;
 }
-.dark-light:checked ~ .section-fluid-main .color-yellow{
-  color: #ffc70f;
-  transition: color 200ms 200ms ease;
-}
 
-.dark-light:checked ~ .section-fluid-main .section-progress .expense p {
-  color: #ffdf74;
-  transition: color 200ms 200ms ease;
-}
 
 
 @media (max-width: 767px) {
   h3{
     font-size: 36px;
-  }
-  h6{
-    font-size: 16px;
   }
   .section-col-1{
     padding: 10px;
@@ -328,13 +287,13 @@ h3{
   .section-col-2{
     padding: 10px;
   }
-  .date-btn:checked + label,
-  .date-btn:not(:checked) + label{
-    padding: 10px;
-  }
   .section-fluid-main{
+    position: absolute;
+  top: 50%;
+  left: 50%;
     padding-top: 100px;
     padding-bottom: 140px;
+    
   }
 }
 @media (max-width: 575px) {
@@ -347,25 +306,12 @@ h3{
   .section-col-1{
     padding: 5px;
   }
-  .section-col-2{
-    padding: 5px;
-  }
-  .date-btn:checked + label,
-  .date-btn:not(:checked) + label{
-    padding: 5px;
-  }
 }
 @media (max-width: 450px) {
   .section-col-2{
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
-  }
-  .date-btn:checked + label,
-  .date-btn:not(:checked) + label{
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
   }
 }
 
@@ -374,13 +320,7 @@ h3{
     width: 48%;
     margin-bottom: 10px;
   }
-  
- 
-  
-  label {
-    font-size: 16px;
-  }
-  
+
   textarea {
     font-size: 16px;
     padding: 10px;
@@ -663,7 +603,7 @@ svg {
 }
 
 polygon.eyes {
-  fill: rgb(1, 143, 96);
+  fill: rgb(255, 0, 21);
 }
 
 polygon,
